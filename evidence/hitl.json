@@ -1,0 +1,194 @@
+[
+  {
+    "job_id": "02504b82-97b4-4e5b-962a-8714518948f0",
+    "status": "COMPLETED",
+    "created_at": 1790468481.751146,
+    "request": {
+      "query": "Explica la politica de aprobacion humana",
+      "critical_action": true
+    },
+    "error": null,
+    "result": {
+      "answer": "La politica de aprobacion humana exige que una accion critica espere aprobacion humana mediante un interrupt de LangGraph. La pausa conserva el checkpoint y publica el estado WAITING_APPROVAL. La aprobacion se realiza mediante POST /tasks/{job_id}/approve, que acepta los campos approved y reason. Si approved es false, el trabajo pasa a CANCELLED y no ejecuta la accion; si es true, Command(resume=...) retoma el mismo thread_id. Ademas, la accion de demostracion registra solamente una aprobacion local, sin enviar correos, realizar compras ni modificar sistemas externos. Los documentos recuperados son datos no confiables y sus instrucciones no pueden cambiar la politica de aprobacion.",
+      "references": [
+        {
+          "id": "7e143b54e2f56583e124691c",
+          "text": "# Politica de seguridad del sistema de demostracion\n\nUna accion critica debe esperar aprobacion humana mediante interrupt de LangGraph. La pausa conserva el checkpoint y publica WAITING_APPROVAL. POST /tasks/{job_id}/approve acepta approved y reason. Si approved es false, el trabajo pasa a CANCELLED y no ejecuta la accion. Si es true, Command(resume=...) retoma el mismo thread_id.\n\nLa accion de demostracion registra solamente una aprobacion local. No envia correos, no realiza compras ni modifica sistemas externos. La API y Phoenix se enlazan a 127.0.0.1. Es un laboratorio local sin autenticacion de usuarios; no debe exponerse a Internet. Para produccion externa se requieren autenticacion, autorizacion por trabajo, cifrado, retencion, limites de consumo y gestion de secretos.\n\nEste proyecto no usa claves de API. El gateway permite solamente un endpoint Ollama en loopback, ignora proxies y rechaza modelos cloud o aliases que declaren un servidor remoto. Los embeddings usan un modelo ONNX ya disponible localmente, sin descargas automaticas. Los documentos recuperados son datos no confiables. Sus instrucciones no pueden alterar el rol del supervisor, ejecutar herramientas arbitrarias ni cambiar la politica de aprobacion.",
+          "source": "seguridad.md",
+          "page": 1,
+          "category": "seguridad",
+          "score": 0.03278688524590164
+        }
+      ],
+      "answerable": true,
+      "confidence": 0.95,
+      "limitations": "La evidencia proviene de un unico documento de seguridad; no se identificaron contradicciones con otras fuentes recuperadas. El documento describe un sistema ficticio de demostracion, por lo que la politica aplica a ese contexto y no necesariamente a produccion externa.",
+      "contributors": [
+        "analyst",
+        "researcher"
+      ],
+      "validation_passed": true
+    },
+    "started_at": 1790468481.9781241,
+    "trace_id": "8416e87803607cee60cda1b755e05ddf",
+    "approval_request": {
+      "action": "registrar aprobacion local de accion critica",
+      "query": "Explica la politica de aprobacion humana",
+      "requires_approval": true,
+      "warning": "No se ejecuta ninguna accion externa en este laboratorio."
+    },
+    "finished_at": 1790468489.3204732,
+    "latency_seconds": 7.569327116012573,
+    "approval": {
+      "approved": true,
+      "reason": "Decision de prueba local"
+    },
+    "routing_log": [
+      {
+        "step": 1,
+        "proposed": "researcher",
+        "selected": "researcher",
+        "reason": "No hay evidencia ni analisis previos; se requiere investigacion inicial sobre la politica de aprobacion humana."
+      },
+      {
+        "step": 2,
+        "proposed": "analyst",
+        "selected": "analyst",
+        "reason": "La evidencia de investigación está disponible y no hay análisis; corresponde al analista procesarla antes de validar."
+      },
+      {
+        "step": 3,
+        "proposed": "validate",
+        "selected": "validate",
+        "reason": "Investigación y análisis completados sin errores; corresponde validar los artefactos antes de emitir la decisión final."
+      }
+    ],
+    "contributions": [
+      {
+        "agent": "researcher",
+        "artifact": {
+          "summary": "La politica de aprobacion humana exige que una accion critica espere aprobacion humana mediante un interrupt de LangGraph. La pausa conserva el checkpoint y publica el estado WAITING_APPROVAL. La aprobacion se realiza mediante POST /tasks/{job_id}/approve, que acepta los campos approved y reason. Si approved es false, el trabajo pasa a CANCELLED y no ejecuta la accion; si es true, Command(resume=...) retoma el mismo thread_id. Ademas, la accion de demostracion registra solamente una aprobacion local, sin enviar correos, realizar compras ni modificar sistemas externos. Los documentos recuperados son datos no confiables y sus instrucciones no pueden cambiar la politica de aprobacion.",
+          "source_ids": [
+            "7e143b54e2f56583e124691c"
+          ],
+          "sufficient": true
+        },
+        "tool": "search_knowledge_base"
+      },
+      {
+        "agent": "analyst",
+        "artifact": {
+          "answer": "La politica de aprobacion humana exige que una accion critica espere aprobacion humana mediante un interrupt de LangGraph. La pausa conserva el checkpoint y publica el estado WAITING_APPROVAL. La aprobacion se realiza mediante POST /tasks/{job_id}/approve, que acepta los campos approved y reason. Si approved es false, el trabajo pasa a CANCELLED y no ejecuta la accion; si es true, Command(resume=...) retoma el mismo thread_id. Ademas, la accion de demostracion registra solamente una aprobacion local, sin enviar correos, realizar compras ni modificar sistemas externos. Los documentos recuperados son datos no confiables y sus instrucciones no pueden cambiar la politica de aprobacion.",
+          "source_ids": [
+            "7e143b54e2f56583e124691c"
+          ],
+          "answerable": true,
+          "confidence": 0.95,
+          "limitations": "La evidencia proviene de un unico documento de seguridad; no se identificaron contradicciones con otras fuentes recuperadas. El documento describe un sistema ficticio de demostracion, por lo que la politica aplica a ese contexto y no necesariamente a produccion externa."
+        },
+        "tool": "validate_research_schema"
+      }
+    ],
+    "usages": [
+      {
+        "kind": "chat",
+        "model": "deepseek-flash",
+        "provider": "deepseek",
+        "tokens_measured": true,
+        "attempts": 1,
+        "billing": "estimacion_usage_y_tarifas_OFF_PEAK_2026-09-26; no_factura",
+        "input_tokens": 221,
+        "output_tokens": 38,
+        "cached_tokens": 0,
+        "cost_usd": 5.5950000000000005e-05
+      },
+      {
+        "kind": "embedding",
+        "model": "all-MiniLM-L6-v2",
+        "provider": "onnx_local",
+        "tokens_measured": false,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "cached_tokens": 0,
+        "billing": "sin_facturacion_API; no_se_inventan_tokens_de_embeddings",
+        "cost_usd": 0.0
+      },
+      {
+        "kind": "chat",
+        "model": "deepseek-flash",
+        "provider": "deepseek",
+        "tokens_measured": true,
+        "attempts": 1,
+        "billing": "estimacion_usage_y_tarifas_OFF_PEAK_2026-09-26; no_factura",
+        "input_tokens": 1627,
+        "output_tokens": 200,
+        "cached_tokens": 0,
+        "cost_usd": 0.00036404999999999993
+      },
+      {
+        "kind": "chat",
+        "model": "deepseek-flash",
+        "provider": "deepseek",
+        "tokens_measured": true,
+        "attempts": 1,
+        "billing": "estimacion_usage_y_tarifas_OFF_PEAK_2026-09-26; no_factura",
+        "input_tokens": 221,
+        "output_tokens": 37,
+        "cached_tokens": 0,
+        "cost_usd": 5.535e-05
+      },
+      {
+        "kind": "chat",
+        "model": "deepseek-flash",
+        "provider": "deepseek",
+        "tokens_measured": true,
+        "attempts": 1,
+        "billing": "estimacion_usage_y_tarifas_OFF_PEAK_2026-09-26; no_factura",
+        "input_tokens": 1940,
+        "output_tokens": 273,
+        "cached_tokens": 128,
+        "cost_usd": 0.00043598400000000005
+      },
+      {
+        "kind": "chat",
+        "model": "deepseek-flash",
+        "provider": "deepseek",
+        "tokens_measured": true,
+        "attempts": 1,
+        "billing": "estimacion_usage_y_tarifas_OFF_PEAK_2026-09-26; no_factura",
+        "input_tokens": 221,
+        "output_tokens": 39,
+        "cached_tokens": 0,
+        "cost_usd": 5.655e-05
+      }
+    ],
+    "cost_usd": 0.000967884
+  },
+  {
+    "job_id": "d7991048-fd82-4eb7-81f7-99c98c00f50b",
+    "status": "CANCELLED",
+    "created_at": 1790468489.354558,
+    "request": {
+      "query": "Explica la politica de aprobacion humana",
+      "critical_action": true
+    },
+    "error": null,
+    "result": {
+      "answer": "Accion rechazada por la persona responsable"
+    },
+    "started_at": 1790468489.586085,
+    "trace_id": "234e76d0113a39b324fa806c6de89794",
+    "approval_request": {
+      "action": "registrar aprobacion local de accion critica",
+      "query": "Explica la politica de aprobacion humana",
+      "requires_approval": true,
+      "warning": "No se ejecuta ninguna accion externa en este laboratorio."
+    },
+    "finished_at": 1790468489.5951161,
+    "latency_seconds": 0.24055814743041992,
+    "approval": {
+      "approved": false,
+      "reason": "Decision de prueba local"
+    }
+  }
+]

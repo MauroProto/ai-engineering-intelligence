@@ -1,0 +1,596 @@
+{
+  "project": "coderhouse-deepseek-verificado-2026-09-26",
+  "source": "Phoenix SQLite en modo lectura; no se modifican trazas",
+  "root_traces": 5,
+  "span_count": 65,
+  "llm_calls": 25,
+  "p95_seconds": 7.5683816,
+  "cost_usd": 0.0035578019999999997,
+  "spans": [
+    {
+      "trace_id": "f97b2f4c4a6b98da322439cea9da6737",
+      "name": "task.execute",
+      "kind": "AGENT",
+      "seconds": 7.610582,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": null
+    },
+    {
+      "trace_id": "33f27070acb6ff8449829158d645ba5f",
+      "name": "task.execute",
+      "kind": "AGENT",
+      "seconds": 7.39958,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": null
+    },
+    {
+      "trace_id": "bc8e5de5e7d3a827f37f8c432f3bc0c7",
+      "name": "task.execute",
+      "kind": "AGENT",
+      "seconds": 7.309296,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": null
+    },
+    {
+      "trace_id": "fbb00aada0d9644bed2aa038fa30767b",
+      "name": "task.execute",
+      "kind": "AGENT",
+      "seconds": 7.223691,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": null
+    },
+    {
+      "trace_id": "6e7399fd99f663cb0a4b727762bd3559",
+      "name": "task.execute",
+      "kind": "AGENT",
+      "seconds": 6.87738,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": null
+    },
+    {
+      "trace_id": "f97b2f4c4a6b98da322439cea9da6737",
+      "name": "agent.supervisor",
+      "kind": "AGENT",
+      "seconds": 1.480065,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": null
+    },
+    {
+      "trace_id": "f97b2f4c4a6b98da322439cea9da6737",
+      "name": "llm.RouteDecision",
+      "kind": "LLM",
+      "seconds": 1.479996,
+      "input_tokens": 227,
+      "output_tokens": 40,
+      "cost_usd": 5.805e-05
+    },
+    {
+      "trace_id": "bc8e5de5e7d3a827f37f8c432f3bc0c7",
+      "name": "agent.supervisor",
+      "kind": "AGENT",
+      "seconds": 1.262713,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": null
+    },
+    {
+      "trace_id": "bc8e5de5e7d3a827f37f8c432f3bc0c7",
+      "name": "llm.RouteDecision",
+      "kind": "LLM",
+      "seconds": 1.262652,
+      "input_tokens": 225,
+      "output_tokens": 31,
+      "cost_usd": 5.235e-05
+    },
+    {
+      "trace_id": "33f27070acb6ff8449829158d645ba5f",
+      "name": "agent.supervisor",
+      "kind": "AGENT",
+      "seconds": 1.476066,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": null
+    },
+    {
+      "trace_id": "33f27070acb6ff8449829158d645ba5f",
+      "name": "llm.RouteDecision",
+      "kind": "LLM",
+      "seconds": 1.476025,
+      "input_tokens": 226,
+      "output_tokens": 43,
+      "cost_usd": 5.97e-05
+    },
+    {
+      "trace_id": "6e7399fd99f663cb0a4b727762bd3559",
+      "name": "agent.supervisor",
+      "kind": "AGENT",
+      "seconds": 1.260148,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": null
+    },
+    {
+      "trace_id": "6e7399fd99f663cb0a4b727762bd3559",
+      "name": "llm.RouteDecision",
+      "kind": "LLM",
+      "seconds": 1.260046,
+      "input_tokens": 228,
+      "output_tokens": 38,
+      "cost_usd": 5.6999999999999996e-05
+    },
+    {
+      "trace_id": "fbb00aada0d9644bed2aa038fa30767b",
+      "name": "agent.supervisor",
+      "kind": "AGENT",
+      "seconds": 1.473369,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": null
+    },
+    {
+      "trace_id": "fbb00aada0d9644bed2aa038fa30767b",
+      "name": "llm.RouteDecision",
+      "kind": "LLM",
+      "seconds": 1.473331,
+      "input_tokens": 224,
+      "output_tokens": 41,
+      "cost_usd": 5.819999999999999e-05
+    },
+    {
+      "trace_id": "6e7399fd99f663cb0a4b727762bd3559",
+      "name": "agent.researcher",
+      "kind": "AGENT",
+      "seconds": 1.685038,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": null
+    },
+    {
+      "trace_id": "6e7399fd99f663cb0a4b727762bd3559",
+      "name": "tool.search_knowledge_base",
+      "kind": "RETRIEVER",
+      "seconds": 0.232896,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": null
+    },
+    {
+      "trace_id": "bc8e5de5e7d3a827f37f8c432f3bc0c7",
+      "name": "agent.researcher",
+      "kind": "AGENT",
+      "seconds": 1.537557,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": null
+    },
+    {
+      "trace_id": "bc8e5de5e7d3a827f37f8c432f3bc0c7",
+      "name": "tool.search_knowledge_base",
+      "kind": "RETRIEVER",
+      "seconds": 0.238515,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": null
+    },
+    {
+      "trace_id": "fbb00aada0d9644bed2aa038fa30767b",
+      "name": "agent.researcher",
+      "kind": "AGENT",
+      "seconds": 1.635709,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": null
+    },
+    {
+      "trace_id": "fbb00aada0d9644bed2aa038fa30767b",
+      "name": "tool.search_knowledge_base",
+      "kind": "RETRIEVER",
+      "seconds": 0.030158,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": null
+    },
+    {
+      "trace_id": "33f27070acb6ff8449829158d645ba5f",
+      "name": "agent.researcher",
+      "kind": "AGENT",
+      "seconds": 1.823759,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": null
+    },
+    {
+      "trace_id": "33f27070acb6ff8449829158d645ba5f",
+      "name": "tool.search_knowledge_base",
+      "kind": "RETRIEVER",
+      "seconds": 0.037243,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": null
+    },
+    {
+      "trace_id": "f97b2f4c4a6b98da322439cea9da6737",
+      "name": "agent.researcher",
+      "kind": "AGENT",
+      "seconds": 1.759421,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": null
+    },
+    {
+      "trace_id": "f97b2f4c4a6b98da322439cea9da6737",
+      "name": "tool.search_knowledge_base",
+      "kind": "RETRIEVER",
+      "seconds": 0.043308,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": null
+    },
+    {
+      "trace_id": "6e7399fd99f663cb0a4b727762bd3559",
+      "name": "llm.ResearchArtifact",
+      "kind": "LLM",
+      "seconds": 1.45085,
+      "input_tokens": 1741,
+      "output_tokens": 130,
+      "cost_usd": 0.000113358
+    },
+    {
+      "trace_id": "bc8e5de5e7d3a827f37f8c432f3bc0c7",
+      "name": "llm.ResearchArtifact",
+      "kind": "LLM",
+      "seconds": 1.298623,
+      "input_tokens": 1738,
+      "output_tokens": 106,
+      "cost_usd": 9.8508e-05
+    },
+    {
+      "trace_id": "fbb00aada0d9644bed2aa038fa30767b",
+      "name": "llm.ResearchArtifact",
+      "kind": "LLM",
+      "seconds": 1.603721,
+      "input_tokens": 1733,
+      "output_tokens": 283,
+      "cost_usd": 0.000203958
+    },
+    {
+      "trace_id": "33f27070acb6ff8449829158d645ba5f",
+      "name": "llm.ResearchArtifact",
+      "kind": "LLM",
+      "seconds": 1.786026,
+      "input_tokens": 1735,
+      "output_tokens": 183,
+      "cost_usd": 0.000144258
+    },
+    {
+      "trace_id": "f97b2f4c4a6b98da322439cea9da6737",
+      "name": "llm.ResearchArtifact",
+      "kind": "LLM",
+      "seconds": 1.71498,
+      "input_tokens": 1736,
+      "output_tokens": 248,
+      "cost_usd": 0.00018340799999999998
+    },
+    {
+      "trace_id": "bc8e5de5e7d3a827f37f8c432f3bc0c7",
+      "name": "agent.supervisor",
+      "kind": "AGENT",
+      "seconds": 1.124375,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": null
+    },
+    {
+      "trace_id": "bc8e5de5e7d3a827f37f8c432f3bc0c7",
+      "name": "llm.RouteDecision",
+      "kind": "LLM",
+      "seconds": 1.124315,
+      "input_tokens": 225,
+      "output_tokens": 38,
+      "cost_usd": 5.655e-05
+    },
+    {
+      "trace_id": "6e7399fd99f663cb0a4b727762bd3559",
+      "name": "agent.supervisor",
+      "kind": "AGENT",
+      "seconds": 1.009242,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": null
+    },
+    {
+      "trace_id": "6e7399fd99f663cb0a4b727762bd3559",
+      "name": "llm.RouteDecision",
+      "kind": "LLM",
+      "seconds": 1.00919,
+      "input_tokens": 228,
+      "output_tokens": 47,
+      "cost_usd": 6.24e-05
+    },
+    {
+      "trace_id": "fbb00aada0d9644bed2aa038fa30767b",
+      "name": "agent.supervisor",
+      "kind": "AGENT",
+      "seconds": 1.223308,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": null
+    },
+    {
+      "trace_id": "fbb00aada0d9644bed2aa038fa30767b",
+      "name": "llm.RouteDecision",
+      "kind": "LLM",
+      "seconds": 1.223249,
+      "input_tokens": 224,
+      "output_tokens": 45,
+      "cost_usd": 6.0599999999999996e-05
+    },
+    {
+      "trace_id": "f97b2f4c4a6b98da322439cea9da6737",
+      "name": "agent.supervisor",
+      "kind": "AGENT",
+      "seconds": 1.001674,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": null
+    },
+    {
+      "trace_id": "f97b2f4c4a6b98da322439cea9da6737",
+      "name": "llm.RouteDecision",
+      "kind": "LLM",
+      "seconds": 1.001616,
+      "input_tokens": 227,
+      "output_tokens": 43,
+      "cost_usd": 5.9850000000000005e-05
+    },
+    {
+      "trace_id": "33f27070acb6ff8449829158d645ba5f",
+      "name": "agent.supervisor",
+      "kind": "AGENT",
+      "seconds": 1.125023,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": null
+    },
+    {
+      "trace_id": "33f27070acb6ff8449829158d645ba5f",
+      "name": "llm.RouteDecision",
+      "kind": "LLM",
+      "seconds": 1.124973,
+      "input_tokens": 226,
+      "output_tokens": 43,
+      "cost_usd": 5.97e-05
+    },
+    {
+      "trace_id": "bc8e5de5e7d3a827f37f8c432f3bc0c7",
+      "name": "agent.analyst",
+      "kind": "AGENT",
+      "seconds": 2.037673,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": null
+    },
+    {
+      "trace_id": "bc8e5de5e7d3a827f37f8c432f3bc0c7",
+      "name": "llm.AnalysisArtifact",
+      "kind": "LLM",
+      "seconds": 2.03688,
+      "input_tokens": 1957,
+      "output_tokens": 232,
+      "cost_usd": 0.0004139339999999999
+    },
+    {
+      "trace_id": "6e7399fd99f663cb0a4b727762bd3559",
+      "name": "agent.analyst",
+      "kind": "AGENT",
+      "seconds": 1.624525,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": null
+    },
+    {
+      "trace_id": "6e7399fd99f663cb0a4b727762bd3559",
+      "name": "llm.AnalysisArtifact",
+      "kind": "LLM",
+      "seconds": 1.623949,
+      "input_tokens": 1984,
+      "output_tokens": 187,
+      "cost_usd": 0.00039098399999999993
+    },
+    {
+      "trace_id": "f97b2f4c4a6b98da322439cea9da6737",
+      "name": "agent.analyst",
+      "kind": "AGENT",
+      "seconds": 2.034594,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": null
+    },
+    {
+      "trace_id": "f97b2f4c4a6b98da322439cea9da6737",
+      "name": "llm.AnalysisArtifact",
+      "kind": "LLM",
+      "seconds": 2.034023,
+      "input_tokens": 2097,
+      "output_tokens": 274,
+      "cost_usd": 0.00046013399999999996
+    },
+    {
+      "trace_id": "fbb00aada0d9644bed2aa038fa30767b",
+      "name": "agent.analyst",
+      "kind": "AGENT",
+      "seconds": 1.864303,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": null
+    },
+    {
+      "trace_id": "fbb00aada0d9644bed2aa038fa30767b",
+      "name": "llm.AnalysisArtifact",
+      "kind": "LLM",
+      "seconds": 1.863815,
+      "input_tokens": 2129,
+      "output_tokens": 327,
+      "cost_usd": 0.000496734
+    },
+    {
+      "trace_id": "33f27070acb6ff8449829158d645ba5f",
+      "name": "agent.analyst",
+      "kind": "AGENT",
+      "seconds": 1.787127,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": null
+    },
+    {
+      "trace_id": "33f27070acb6ff8449829158d645ba5f",
+      "name": "llm.AnalysisArtifact",
+      "kind": "LLM",
+      "seconds": 1.786627,
+      "input_tokens": 2031,
+      "output_tokens": 248,
+      "cost_usd": 0.00019002599999999999
+    },
+    {
+      "trace_id": "6e7399fd99f663cb0a4b727762bd3559",
+      "name": "agent.supervisor",
+      "kind": "AGENT",
+      "seconds": 1.267175,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": null
+    },
+    {
+      "trace_id": "6e7399fd99f663cb0a4b727762bd3559",
+      "name": "llm.RouteDecision",
+      "kind": "LLM",
+      "seconds": 1.267089,
+      "input_tokens": 228,
+      "output_tokens": 40,
+      "cost_usd": 5.82e-05
+    },
+    {
+      "trace_id": "bc8e5de5e7d3a827f37f8c432f3bc0c7",
+      "name": "agent.supervisor",
+      "kind": "AGENT",
+      "seconds": 1.313612,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": null
+    },
+    {
+      "trace_id": "bc8e5de5e7d3a827f37f8c432f3bc0c7",
+      "name": "llm.RouteDecision",
+      "kind": "LLM",
+      "seconds": 1.313546,
+      "input_tokens": 225,
+      "output_tokens": 28,
+      "cost_usd": 5.0549999999999995e-05
+    },
+    {
+      "trace_id": "fbb00aada0d9644bed2aa038fa30767b",
+      "name": "agent.supervisor",
+      "kind": "AGENT",
+      "seconds": 0.993205,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": null
+    },
+    {
+      "trace_id": "fbb00aada0d9644bed2aa038fa30767b",
+      "name": "llm.RouteDecision",
+      "kind": "LLM",
+      "seconds": 0.993127,
+      "input_tokens": 224,
+      "output_tokens": 33,
+      "cost_usd": 5.34e-05
+    },
+    {
+      "trace_id": "33f27070acb6ff8449829158d645ba5f",
+      "name": "agent.supervisor",
+      "kind": "AGENT",
+      "seconds": 1.150248,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": null
+    },
+    {
+      "trace_id": "33f27070acb6ff8449829158d645ba5f",
+      "name": "llm.RouteDecision",
+      "kind": "LLM",
+      "seconds": 1.150158,
+      "input_tokens": 226,
+      "output_tokens": 44,
+      "cost_usd": 6.0299999999999995e-05
+    },
+    {
+      "trace_id": "f97b2f4c4a6b98da322439cea9da6737",
+      "name": "agent.supervisor",
+      "kind": "AGENT",
+      "seconds": 1.305131,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": null
+    },
+    {
+      "trace_id": "f97b2f4c4a6b98da322439cea9da6737",
+      "name": "llm.RouteDecision",
+      "kind": "LLM",
+      "seconds": 1.305026,
+      "input_tokens": 227,
+      "output_tokens": 36,
+      "cost_usd": 5.565e-05
+    },
+    {
+      "trace_id": "6e7399fd99f663cb0a4b727762bd3559",
+      "name": "validate.final_contract",
+      "kind": "CHAIN",
+      "seconds": 4.9e-05,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": null
+    },
+    {
+      "trace_id": "fbb00aada0d9644bed2aa038fa30767b",
+      "name": "validate.final_contract",
+      "kind": "CHAIN",
+      "seconds": 7.2e-05,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": null
+    },
+    {
+      "trace_id": "bc8e5de5e7d3a827f37f8c432f3bc0c7",
+      "name": "validate.final_contract",
+      "kind": "CHAIN",
+      "seconds": 5.6e-05,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": null
+    },
+    {
+      "trace_id": "33f27070acb6ff8449829158d645ba5f",
+      "name": "validate.final_contract",
+      "kind": "CHAIN",
+      "seconds": 0.000109,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": null
+    },
+    {
+      "trace_id": "f97b2f4c4a6b98da322439cea9da6737",
+      "name": "validate.final_contract",
+      "kind": "CHAIN",
+      "seconds": 0.000102,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": null
+    }
+  ]
+}

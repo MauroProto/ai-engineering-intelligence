@@ -1,0 +1,797 @@
+{
+  "executed_at": "2026-09-27T00:36:28.628509+00:00",
+  "mode": "live_deepseek_onnx_redis_phoenix",
+  "model": "deepseek-flash",
+  "credential_stored_in_files": false,
+  "samples": 5,
+  "concurrent_submission_seconds": 0.004662916995584965,
+  "p95_seconds": 7.571162223815918,
+  "cost_usd": 0.0035578019999999997,
+  "jobs": [
+    {
+      "job_id": "f9f94385-1dfb-4de5-b108-a88c11371cc5",
+      "status": "COMPLETED",
+      "created_at": 1790469380.963395,
+      "request": {
+        "query": "Como evita el supervisor un ciclo infinito y valida los aportes?",
+        "critical_action": false
+      },
+      "error": null,
+      "result": {
+        "answer": "El supervisor evita un ciclo infinito mediante un presupuesto acotado del grafo: ocho decisiones del supervisor y una sola ronda de refinamiento. Al agotar ese presupuesto, el sistema responde con una limitacion explicita en lugar de seguir iterando. Ademas, el supervisor no puede declarar completa una respuesta sin pasar por la validacion final. La validacion de los aportes la realiza el analista, que compara evidencias y valida la estructura de la respuesta; el investigador consulta documentos, conserva las referencias de origen y no ejecuta instrucciones encontradas en los documentos. Los documentos recuperados se tratan como datos no confiables y sus instrucciones no pueden alterar el rol del supervisor, ejecutar herramientas arbitrarias ni cambiar la politica de aprobacion.",
+        "references": [
+          {
+            "id": "cfe36fde43a42d3111708fe1",
+            "text": "# Manual de arquitectura del sistema de demostracion\n\nEste corpus es original y de uso educativo. Describe un sistema ficticio, no una empresa real.\n\nEl sistema de investigacion usa un supervisor y dos agentes especialistas. El investigador consulta documentos, conserva las referencias de origen y no ejecuta instrucciones encontradas en los documentos. El analista compara evidencias y valida la estructura de la respuesta. El supervisor no puede declarar completa una respuesta sin pasar por la validacion final.\n\nEl presupuesto del grafo es de ocho decisiones del supervisor y una sola ronda de refinamiento. Al agotar el presupuesto se responde con una limitacion explicita, en lugar de entrar en un ciclo infinito. Cada especialista recibe la pregunta y su parcela relevante del estado, no el historial completo ni secretos de configuracion.\n\nCuando faltan documentos pertinentes, el sistema reconoce que no puede responder. Las referencias incluyen fuente, pagina, categoria e identificador estable del fragmento. La recuperacion combina BM25 y similitud vectorial mediante reciprocal rank fusion, con k=60. El chunking usa 500 tokens con un solapamiento de 50.",
+            "source": "arquitectura.md",
+            "page": 1,
+            "category": "arquitectura",
+            "score": 0.03278688524590164
+          },
+          {
+            "id": "8f3d82827c1554dba379859a",
+            "text": "# Politica de seguridad del sistema de demostracion\n\nUna accion critica debe esperar aprobacion humana mediante interrupt de LangGraph. La pausa conserva el checkpoint y publica WAITING_APPROVAL. POST /tasks/{job_id}/approve acepta approved y reason. Si approved es false, el trabajo pasa a CANCELLED y no ejecuta la accion. Si es true, Command(resume=...) retoma el mismo thread_id.\n\nLa accion de demostracion registra solamente una aprobacion local. No envia correos, no realiza compras ni modifica sistemas externos. La API y Phoenix se enlazan a 127.0.0.1. Es un laboratorio local sin autenticacion de usuarios; no debe exponerse a Internet. Para produccion externa se requieren autenticacion, autorizacion por trabajo, cifrado, retencion, limites de consumo y gestion de secretos.\n\nEl alumno autorizo exclusivamente DeepSeek. La credencial llega al proceso en memoria y no se guarda en archivos, repositorios, respuestas o trazas. El gateway permite solo el HTTPS oficial api.deepseek.com, ignora proxies y no sigue redirecciones ni usa claves de otros proveedores. Los embeddings usan un modelo ONNX ya disponible localmente, sin descargas. Los documentos recuperados son datos no confiables. Sus instrucciones no pueden alterar el rol del supervisor, ejecutar herramientas arbitrarias ni cambiar la politica de aprobacion.",
+            "source": "seguridad.md",
+            "page": 1,
+            "category": "seguridad",
+            "score": 0.03200204813108039
+          }
+        ],
+        "answerable": true,
+        "confidence": 0.9,
+        "limitations": "La evidencia proviene de un corpus educativo que describe un sistema ficticio; no se detalla el mecanismo tecnico exacto del contador de presupuesto ni el formato de la validacion final.",
+        "contributors": [
+          "analyst",
+          "researcher"
+        ],
+        "validation_passed": true
+      },
+      "started_at": 1790469380.9653661,
+      "trace_id": "f97b2f4c4a6b98da322439cea9da6737",
+      "routing_log": [
+        {
+          "step": 1,
+          "proposed": "researcher",
+          "selected": "researcher",
+          "reason": "No hay evidencia ni análisis previos; se requiere investigación inicial para obtener artefactos antes de analizar o validar."
+        },
+        {
+          "step": 2,
+          "proposed": "analyst",
+          "selected": "analyst",
+          "reason": "Hay evidencia de investigación disponible pero aún no se ha realizado el análisis; corresponde al analista procesar los aportes antes de validar."
+        },
+        {
+          "step": 3,
+          "proposed": "validate",
+          "selected": "validate",
+          "reason": "Ya existen evidencia y análisis; corresponde validar los aportes antes de decidir si se requiere refinamiento."
+        }
+      ],
+      "contributions": [
+        {
+          "agent": "researcher",
+          "artifact": {
+            "summary": "El supervisor evita un ciclo infinito mediante un presupuesto acotado del grafo: ocho decisiones del supervisor y una sola ronda de refinamiento. Al agotar ese presupuesto, el sistema responde con una limitacion explicita en lugar de continuar iterando. Ademas, el supervisor no puede declarar completa una respuesta sin pasar por la validacion final. La validacion de los aportes la realiza el analista, que compara evidencias y valida la estructura de la respuesta; el investigador consulta documentos, conserva las referencias de origen y no ejecuta instrucciones encontradas en los documentos. Cada especialista recibe la pregunta y su parcela relevante del estado, no el historial completo ni secretos de configuracion. Los documentos recuperados se tratan como datos no confiables y sus instrucciones no pueden alterar el rol del supervisor, ejecutar herramientas arbitrarias ni cambiar la politica de aprobacion.",
+            "source_ids": [
+              "cfe36fde43a42d3111708fe1",
+              "8f3d82827c1554dba379859a"
+            ],
+            "sufficient": true
+          },
+          "tool": "search_knowledge_base"
+        },
+        {
+          "agent": "analyst",
+          "artifact": {
+            "answer": "El supervisor evita un ciclo infinito mediante un presupuesto acotado del grafo: ocho decisiones del supervisor y una sola ronda de refinamiento. Al agotar ese presupuesto, el sistema responde con una limitacion explicita en lugar de seguir iterando. Ademas, el supervisor no puede declarar completa una respuesta sin pasar por la validacion final. La validacion de los aportes la realiza el analista, que compara evidencias y valida la estructura de la respuesta; el investigador consulta documentos, conserva las referencias de origen y no ejecuta instrucciones encontradas en los documentos. Los documentos recuperados se tratan como datos no confiables y sus instrucciones no pueden alterar el rol del supervisor, ejecutar herramientas arbitrarias ni cambiar la politica de aprobacion.",
+            "source_ids": [
+              "cfe36fde43a42d3111708fe1",
+              "8f3d82827c1554dba379859a"
+            ],
+            "answerable": true,
+            "confidence": 0.9,
+            "limitations": "La evidencia proviene de un corpus educativo que describe un sistema ficticio; no se detalla el mecanismo tecnico exacto del contador de presupuesto ni el formato de la validacion final."
+          },
+          "tool": "validate_research_schema"
+        }
+      ],
+      "usages": [
+        {
+          "kind": "chat",
+          "model": "deepseek-flash",
+          "provider": "deepseek",
+          "tokens_measured": true,
+          "attempts": 1,
+          "billing": "estimacion_usage_y_tarifas_OFF_PEAK_2026-09-26; no_factura",
+          "input_tokens": 227,
+          "output_tokens": 40,
+          "cached_tokens": 0,
+          "cost_usd": 5.8049999999999995e-05
+        },
+        {
+          "kind": "embedding",
+          "model": "all-MiniLM-L6-v2",
+          "provider": "onnx_local",
+          "tokens_measured": false,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "cached_tokens": 0,
+          "billing": "sin_facturacion_API; no_se_inventan_tokens_de_embeddings",
+          "cost_usd": 0.0
+        },
+        {
+          "kind": "chat",
+          "model": "deepseek-flash",
+          "provider": "deepseek",
+          "tokens_measured": true,
+          "attempts": 1,
+          "billing": "estimacion_usage_y_tarifas_OFF_PEAK_2026-09-26; no_factura",
+          "input_tokens": 1736,
+          "output_tokens": 248,
+          "cached_tokens": 1536,
+          "cost_usd": 0.00018340799999999998
+        },
+        {
+          "kind": "chat",
+          "model": "deepseek-flash",
+          "provider": "deepseek",
+          "tokens_measured": true,
+          "attempts": 1,
+          "billing": "estimacion_usage_y_tarifas_OFF_PEAK_2026-09-26; no_factura",
+          "input_tokens": 227,
+          "output_tokens": 43,
+          "cached_tokens": 0,
+          "cost_usd": 5.984999999999999e-05
+        },
+        {
+          "kind": "chat",
+          "model": "deepseek-flash",
+          "provider": "deepseek",
+          "tokens_measured": true,
+          "attempts": 1,
+          "billing": "estimacion_usage_y_tarifas_OFF_PEAK_2026-09-26; no_factura",
+          "input_tokens": 2097,
+          "output_tokens": 274,
+          "cached_tokens": 128,
+          "cost_usd": 0.000460134
+        },
+        {
+          "kind": "chat",
+          "model": "deepseek-flash",
+          "provider": "deepseek",
+          "tokens_measured": true,
+          "attempts": 1,
+          "billing": "estimacion_usage_y_tarifas_OFF_PEAK_2026-09-26; no_factura",
+          "input_tokens": 227,
+          "output_tokens": 36,
+          "cached_tokens": 0,
+          "cost_usd": 5.564999999999999e-05
+        }
+      ],
+      "cost_usd": 0.000817092,
+      "finished_at": 1790469388.5768409,
+      "latency_seconds": 7.61344575881958
+    },
+    {
+      "job_id": "6f8dd663-b0fa-439c-81f2-73180087d69c",
+      "status": "COMPLETED",
+      "created_at": 1790469380.964114,
+      "request": {
+        "query": "Como se conserva un trabajo y su checkpoint cuando reinicia FastAPI?",
+        "critical_action": false
+      },
+      "error": null,
+      "result": {
+        "answer": "Reiniciar solamente FastAPI no borra los resultados ni las conversaciones. Los checkpoints de LangGraph se guardan en Redis con thread_id igual a job_id, y Redis debe usar appendonly yes para sobrevivir a su propio reinicio. Además, al reiniciar un worker aislado, este recupera los trabajos RUNNING pendientes desde el último checkpoint. En el caso de una pausa por aprobación humana, la pausa conserva el checkpoint y publica WAITING_APPROVAL; si se aprueba, Command(resume=...) retoma el mismo thread_id.",
+        "references": [
+          {
+            "id": "f08583d8fefdd8e7666dd5f9",
+            "text": "# Manual operativo del sistema de demostracion\n\nLa API POST /tasks valida la consulta con Pydantic, guarda el estado QUEUED en Redis y encola el trabajo en la misma transaccion. Devuelve HTTP 202 con job_id sin esperar a que termine el modelo. GET /tasks/{job_id} permite consultar QUEUED, RUNNING, WAITING_APPROVAL, COMPLETED, CANCELLED o FAILED.\n\nLos workers atienden hasta cinco trabajos concurrentes. Las excepciones y los timeouts cambian el trabajo a FAILED. Cada ejecucion tiene un limite configurable de hasta 600 segundos, por defecto 600 para inferencia local. Cada llamada al modelo tiene su propio timeout de 120 segundos. Una tarea lenta no bloquea el event loop. Una cola de procesamiento conserva los trabajos retirados hasta su confirmacion. Al reiniciar un worker aislado recupera los trabajos RUNNING pendientes desde el ultimo checkpoint.\n\nLos checkpoints de LangGraph se guardan en Redis con thread_id igual a job_id. Redis debe usar appendonly yes para sobrevivir a su propio reinicio. Reiniciar solamente FastAPI no borra los resultados ni las conversaciones.",
+            "source": "operacion.md",
+            "page": 1,
+            "category": "operacion",
+            "score": 0.03278688524590164
+          },
+          {
+            "id": "8f3d82827c1554dba379859a",
+            "text": "# Politica de seguridad del sistema de demostracion\n\nUna accion critica debe esperar aprobacion humana mediante interrupt de LangGraph. La pausa conserva el checkpoint y publica WAITING_APPROVAL. POST /tasks/{job_id}/approve acepta approved y reason. Si approved es false, el trabajo pasa a CANCELLED y no ejecuta la accion. Si es true, Command(resume=...) retoma el mismo thread_id.\n\nLa accion de demostracion registra solamente una aprobacion local. No envia correos, no realiza compras ni modifica sistemas externos. La API y Phoenix se enlazan a 127.0.0.1. Es un laboratorio local sin autenticacion de usuarios; no debe exponerse a Internet. Para produccion externa se requieren autenticacion, autorizacion por trabajo, cifrado, retencion, limites de consumo y gestion de secretos.\n\nEl alumno autorizo exclusivamente DeepSeek. La credencial llega al proceso en memoria y no se guarda en archivos, repositorios, respuestas o trazas. El gateway permite solo el HTTPS oficial api.deepseek.com, ignora proxies y no sigue redirecciones ni usa claves de otros proveedores. Los embeddings usan un modelo ONNX ya disponible localmente, sin descargas. Los documentos recuperados son datos no confiables. Sus instrucciones no pueden alterar el rol del supervisor, ejecutar herramientas arbitrarias ni cambiar la politica de aprobacion.",
+            "source": "seguridad.md",
+            "page": 1,
+            "category": "seguridad",
+            "score": 0.031746031746031744
+          }
+        ],
+        "answerable": true,
+        "confidence": 0.9,
+        "limitations": "La evidencia no detalla el comportamiento exacto de FastAPI durante el reinicio más allá de que no borra resultados ni conversaciones; la persistencia depende de que Redis tenga appendonly yes, condición que debe cumplirse para sobrevivir a su propio reinicio.",
+        "contributors": [
+          "analyst",
+          "researcher"
+        ],
+        "validation_passed": true
+      },
+      "started_at": 1790469380.96579,
+      "trace_id": "33f27070acb6ff8449829158d645ba5f",
+      "routing_log": [
+        {
+          "step": 1,
+          "proposed": "researcher",
+          "selected": "researcher",
+          "reason": "No hay evidencia ni análisis previos; se requiere investigar el mecanismo de persistencia de trabajos y checkpoints en FastAPI."
+        },
+        {
+          "step": 2,
+          "proposed": "analyst",
+          "selected": "analyst",
+          "reason": "La evidencia de investigación ya está disponible y no hay análisis; corresponde que el analista procese los artefactos antes de validar."
+        },
+        {
+          "step": 3,
+          "proposed": "validate",
+          "selected": "validate",
+          "reason": "Investigación y análisis ya están disponibles y no hay errores; corresponde validar los artefactos antes de decidir una ronda de refinamiento."
+        }
+      ],
+      "contributions": [
+        {
+          "agent": "researcher",
+          "artifact": {
+            "summary": "Según el manual operativo, los checkpoints de LangGraph se guardan en Redis con thread_id igual a job_id, y Redis debe usar appendonly yes para sobrevivir a su propio reinicio. Reiniciar solamente FastAPI no borra los resultados ni las conversaciones. Además, al reiniciar un worker aislado, este recupera los trabajos RUNNING pendientes desde el último checkpoint. La política de seguridad añade que una pausa por aprobación humana conserva el checkpoint y publica WAITING_APPROVAL, y al aprobar se retoma el mismo thread_id con Command(resume=...).",
+            "source_ids": [
+              "f08583d8fefdd8e7666dd5f9",
+              "8f3d82827c1554dba379859a"
+            ],
+            "sufficient": true
+          },
+          "tool": "search_knowledge_base"
+        },
+        {
+          "agent": "analyst",
+          "artifact": {
+            "answer": "Reiniciar solamente FastAPI no borra los resultados ni las conversaciones. Los checkpoints de LangGraph se guardan en Redis con thread_id igual a job_id, y Redis debe usar appendonly yes para sobrevivir a su propio reinicio. Además, al reiniciar un worker aislado, este recupera los trabajos RUNNING pendientes desde el último checkpoint. En el caso de una pausa por aprobación humana, la pausa conserva el checkpoint y publica WAITING_APPROVAL; si se aprueba, Command(resume=...) retoma el mismo thread_id.",
+            "source_ids": [
+              "f08583d8fefdd8e7666dd5f9",
+              "8f3d82827c1554dba379859a"
+            ],
+            "answerable": true,
+            "confidence": 0.9,
+            "limitations": "La evidencia no detalla el comportamiento exacto de FastAPI durante el reinicio más allá de que no borra resultados ni conversaciones; la persistencia depende de que Redis tenga appendonly yes, condición que debe cumplirse para sobrevivir a su propio reinicio."
+          },
+          "tool": "validate_research_schema"
+        }
+      ],
+      "usages": [
+        {
+          "kind": "chat",
+          "model": "deepseek-flash",
+          "provider": "deepseek",
+          "tokens_measured": true,
+          "attempts": 1,
+          "billing": "estimacion_usage_y_tarifas_OFF_PEAK_2026-09-26; no_factura",
+          "input_tokens": 226,
+          "output_tokens": 43,
+          "cached_tokens": 0,
+          "cost_usd": 5.97e-05
+        },
+        {
+          "kind": "embedding",
+          "model": "all-MiniLM-L6-v2",
+          "provider": "onnx_local",
+          "tokens_measured": false,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "cached_tokens": 0,
+          "billing": "sin_facturacion_API; no_se_inventan_tokens_de_embeddings",
+          "cost_usd": 0.0
+        },
+        {
+          "kind": "chat",
+          "model": "deepseek-flash",
+          "provider": "deepseek",
+          "tokens_measured": true,
+          "attempts": 1,
+          "billing": "estimacion_usage_y_tarifas_OFF_PEAK_2026-09-26; no_factura",
+          "input_tokens": 1735,
+          "output_tokens": 183,
+          "cached_tokens": 1536,
+          "cost_usd": 0.00014425799999999997
+        },
+        {
+          "kind": "chat",
+          "model": "deepseek-flash",
+          "provider": "deepseek",
+          "tokens_measured": true,
+          "attempts": 1,
+          "billing": "estimacion_usage_y_tarifas_OFF_PEAK_2026-09-26; no_factura",
+          "input_tokens": 226,
+          "output_tokens": 43,
+          "cached_tokens": 0,
+          "cost_usd": 5.97e-05
+        },
+        {
+          "kind": "chat",
+          "model": "deepseek-flash",
+          "provider": "deepseek",
+          "tokens_measured": true,
+          "attempts": 1,
+          "billing": "estimacion_usage_y_tarifas_OFF_PEAK_2026-09-26; no_factura",
+          "input_tokens": 2031,
+          "output_tokens": 248,
+          "cached_tokens": 1792,
+          "cost_usd": 0.00019002599999999999
+        },
+        {
+          "kind": "chat",
+          "model": "deepseek-flash",
+          "provider": "deepseek",
+          "tokens_measured": true,
+          "attempts": 1,
+          "billing": "estimacion_usage_y_tarifas_OFF_PEAK_2026-09-26; no_factura",
+          "input_tokens": 226,
+          "output_tokens": 44,
+          "cached_tokens": 0,
+          "cost_usd": 6.0299999999999995e-05
+        }
+      ],
+      "cost_usd": 0.000513984,
+      "finished_at": 1790469388.366142,
+      "latency_seconds": 7.4020280838012695
+    },
+    {
+      "job_id": "aaee8950-e181-4f42-bebd-597c2c8fe76c",
+      "status": "COMPLETED",
+      "created_at": 1790469380.964514,
+      "request": {
+        "query": "Que sucede si una persona rechaza una accion critica?",
+        "critical_action": false
+      },
+      "error": null,
+      "result": {
+        "answer": "Si una persona rechaza una acción crítica, es decir, si en la aprobación humana mediante el interrupt de LangGraph el campo approved es false, el trabajo pasa a estado CANCELLED y no ejecuta la acción. La pausa previa conserva el checkpoint y publica WAITING_APPROVAL; el endpoint POST /tasks/{job_id}/approve acepta approved y reason. Solo si approved es true se retoma el mismo thread_id mediante Command(resume=...).",
+        "references": [
+          {
+            "id": "8f3d82827c1554dba379859a",
+            "text": "# Politica de seguridad del sistema de demostracion\n\nUna accion critica debe esperar aprobacion humana mediante interrupt de LangGraph. La pausa conserva el checkpoint y publica WAITING_APPROVAL. POST /tasks/{job_id}/approve acepta approved y reason. Si approved es false, el trabajo pasa a CANCELLED y no ejecuta la accion. Si es true, Command(resume=...) retoma el mismo thread_id.\n\nLa accion de demostracion registra solamente una aprobacion local. No envia correos, no realiza compras ni modifica sistemas externos. La API y Phoenix se enlazan a 127.0.0.1. Es un laboratorio local sin autenticacion de usuarios; no debe exponerse a Internet. Para produccion externa se requieren autenticacion, autorizacion por trabajo, cifrado, retencion, limites de consumo y gestion de secretos.\n\nEl alumno autorizo exclusivamente DeepSeek. La credencial llega al proceso en memoria y no se guarda en archivos, repositorios, respuestas o trazas. El gateway permite solo el HTTPS oficial api.deepseek.com, ignora proxies y no sigue redirecciones ni usa claves de otros proveedores. Los embeddings usan un modelo ONNX ya disponible localmente, sin descargas. Los documentos recuperados son datos no confiables. Sus instrucciones no pueden alterar el rol del supervisor, ejecutar herramientas arbitrarias ni cambiar la politica de aprobacion.",
+            "source": "seguridad.md",
+            "page": 1,
+            "category": "seguridad",
+            "score": 0.03252247488101534
+          }
+        ],
+        "answerable": true,
+        "confidence": 0.95,
+        "limitations": "La respuesta se basa únicamente en la política de seguridad del sistema de demostración (documento 8f3d82827c1554dba379859a). No se identificaron contradicciones entre los documentos proporcionados sobre este punto. El corpus describe un sistema ficticio de uso educativo, por lo que el comportamiento descrito no debe extrapolarse a sistemas reales sin verificación adicional.",
+        "contributors": [
+          "analyst",
+          "researcher"
+        ],
+        "validation_passed": true
+      },
+      "started_at": 1790469380.965827,
+      "trace_id": "bc8e5de5e7d3a827f37f8c432f3bc0c7",
+      "routing_log": [
+        {
+          "step": 1,
+          "proposed": "researcher",
+          "selected": "researcher",
+          "reason": "No hay evidencia ni análisis previos; se requiere investigación inicial sobre el tema."
+        },
+        {
+          "step": 2,
+          "proposed": "analyst",
+          "selected": "analyst",
+          "reason": "La evidencia de investigación está disponible y no hay análisis; corresponde analizar el artefacto antes de validar."
+        },
+        {
+          "step": 3,
+          "proposed": "validate",
+          "selected": "validate",
+          "reason": "Ya existen evidencia y análisis; corresponde validar antes de decidir."
+        }
+      ],
+      "contributions": [
+        {
+          "agent": "researcher",
+          "artifact": {
+            "summary": "Según la política de seguridad, una acción crítica debe esperar aprobación humana mediante un interrupt de LangGraph. Si la aprobación se rechaza (approved es false), el trabajo pasa a estado CANCELLED y no ejecuta la acción. Si se aprueba (true), se retoma el mismo thread_id mediante Command(resume=...).",
+            "source_ids": [
+              "8f3d82827c1554dba379859a"
+            ],
+            "sufficient": true
+          },
+          "tool": "search_knowledge_base"
+        },
+        {
+          "agent": "analyst",
+          "artifact": {
+            "answer": "Si una persona rechaza una acción crítica, es decir, si en la aprobación humana mediante el interrupt de LangGraph el campo approved es false, el trabajo pasa a estado CANCELLED y no ejecuta la acción. La pausa previa conserva el checkpoint y publica WAITING_APPROVAL; el endpoint POST /tasks/{job_id}/approve acepta approved y reason. Solo si approved es true se retoma el mismo thread_id mediante Command(resume=...).",
+            "source_ids": [
+              "8f3d82827c1554dba379859a"
+            ],
+            "answerable": true,
+            "confidence": 0.95,
+            "limitations": "La respuesta se basa únicamente en la política de seguridad del sistema de demostración (documento 8f3d82827c1554dba379859a). No se identificaron contradicciones entre los documentos proporcionados sobre este punto. El corpus describe un sistema ficticio de uso educativo, por lo que el comportamiento descrito no debe extrapolarse a sistemas reales sin verificación adicional."
+          },
+          "tool": "validate_research_schema"
+        }
+      ],
+      "usages": [
+        {
+          "kind": "chat",
+          "model": "deepseek-flash",
+          "provider": "deepseek",
+          "tokens_measured": true,
+          "attempts": 1,
+          "billing": "estimacion_usage_y_tarifas_OFF_PEAK_2026-09-26; no_factura",
+          "input_tokens": 225,
+          "output_tokens": 31,
+          "cached_tokens": 0,
+          "cost_usd": 5.234999999999999e-05
+        },
+        {
+          "kind": "embedding",
+          "model": "all-MiniLM-L6-v2",
+          "provider": "onnx_local",
+          "tokens_measured": false,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "cached_tokens": 0,
+          "billing": "sin_facturacion_API; no_se_inventan_tokens_de_embeddings",
+          "cost_usd": 0.0
+        },
+        {
+          "kind": "chat",
+          "model": "deepseek-flash",
+          "provider": "deepseek",
+          "tokens_measured": true,
+          "attempts": 1,
+          "billing": "estimacion_usage_y_tarifas_OFF_PEAK_2026-09-26; no_factura",
+          "input_tokens": 1738,
+          "output_tokens": 106,
+          "cached_tokens": 1536,
+          "cost_usd": 9.8508e-05
+        },
+        {
+          "kind": "chat",
+          "model": "deepseek-flash",
+          "provider": "deepseek",
+          "tokens_measured": true,
+          "attempts": 1,
+          "billing": "estimacion_usage_y_tarifas_OFF_PEAK_2026-09-26; no_factura",
+          "input_tokens": 225,
+          "output_tokens": 38,
+          "cached_tokens": 0,
+          "cost_usd": 5.655e-05
+        },
+        {
+          "kind": "chat",
+          "model": "deepseek-flash",
+          "provider": "deepseek",
+          "tokens_measured": true,
+          "attempts": 1,
+          "billing": "estimacion_usage_y_tarifas_OFF_PEAK_2026-09-26; no_factura",
+          "input_tokens": 1957,
+          "output_tokens": 232,
+          "cached_tokens": 128,
+          "cost_usd": 0.00041393399999999997
+        },
+        {
+          "kind": "chat",
+          "model": "deepseek-flash",
+          "provider": "deepseek",
+          "tokens_measured": true,
+          "attempts": 1,
+          "billing": "estimacion_usage_y_tarifas_OFF_PEAK_2026-09-26; no_factura",
+          "input_tokens": 225,
+          "output_tokens": 28,
+          "cached_tokens": 0,
+          "cost_usd": 5.0549999999999995e-05
+        }
+      ],
+      "cost_usd": 0.000671892,
+      "finished_at": 1790469388.275957,
+      "latency_seconds": 7.311443090438843
+    },
+    {
+      "job_id": "52fd6e05-c390-41c8-a775-2cfe8a2d2727",
+      "status": "COMPLETED",
+      "created_at": 1790469380.964612,
+      "request": {
+        "query": "Como se calculan p95 y costo sin inventar tokens?",
+        "critical_action": false
+      },
+      "error": null,
+      "result": {
+        "answer": "Los tokens LLM no se estiman contando caracteres: provienen de prompt_tokens, completion_tokens y prompt_cache_hit_tokens del campo usage informado por DeepSeek. El costo se calcula separando entrada cacheada, entrada no cacheada y salida, multiplicando cada una por su tarifa por millón. La tarifa Flash OFF-PEAK verificada el 26/09/2026 es 0,003 USD de entrada cacheada, 0,15 USD de entrada no cacheada y 0,60 USD de salida por millón; es una estimación, no una factura, y debe actualizarse si cambia el horario o el proveedor. Los embeddings ONNX son locales y no facturan API, por lo que no se inventan tokens para ellos. p95 se calcula tomando el percentil 95 de las cinco duraciones de los trabajos del benchmark (cinco peticiones concurrentes), midiendo cada latencia desde el encolado hasta la finalización, incluyendo espera de cola, usando interpolación lineal.",
+        "references": [
+          {
+            "id": "629b4739bc460a9d4d330ba5",
+            "text": "# Plan de observabilidad del sistema de demostracion\n\nPhoenix recibe una traza raiz por trabajo y spans de cada supervisor, especialista, herramienta, modelo y validacion. El trace_id se guarda junto al job_id. Los tokens LLM provienen de prompt_tokens, completion_tokens y prompt_cache_hit_tokens de usage informado por DeepSeek; no se estiman contando caracteres. El costo se calcula separando entrada cacheada, entrada no cacheada y salida, multiplicando por sus tarifas por millon. La tarifa Flash OFF-PEAK verificada el 26/09/2026 es 0,003 USD de entrada cacheada, 0,15 USD de entrada no cacheada y 0,60 USD de salida por millon. Es una estimacion, no una factura; hay que actualizar las tarifas si cambia el horario o el proveedor. Los embeddings ONNX existentes son locales y no facturan API; no se inventan tokens para ellos. Tampoco se midieron hardware ni energia.\n\nEl benchmark usa cinco peticiones concurrentes. La latencia de cada trabajo se mide desde su encolado hasta su finalizacion, incluyendo espera de cola. p95 se calcula con el percentil 95 de esas cinco duraciones usando interpolacion lineal. Cinco muestras son una prueba funcional, no una estimacion estadistica estable del rendimiento en produccion.\n\nPrecision@5 es la cantidad de fragmentos relevantes recuperados dividida por cinco. Recall@5 es la cantidad de relevantes recuperados dividida por el total de relevantes de la pregunta. Si hay menos de cinco documentos indexados, se debe aclarar el denominador efectivo. Groundedness se revisa comparando cada respuesta con sus documentos y no se presume por el hecho de incluir citas.",
+            "source": "metricas.md",
+            "page": 1,
+            "category": "metricas",
+            "score": 0.03278688524590164
+          }
+        ],
+        "answerable": true,
+        "confidence": 0.9,
+        "limitations": "Cinco muestras son una prueba funcional, no una estimación estadística estable de producción. Las tarifas son una estimación, no una factura, y deben actualizarse si cambia el horario o el proveedor.",
+        "contributors": [
+          "analyst",
+          "researcher"
+        ],
+        "validation_passed": true
+      },
+      "started_at": 1790469380.966346,
+      "trace_id": "fbb00aada0d9644bed2aa038fa30767b",
+      "routing_log": [
+        {
+          "step": 1,
+          "proposed": "researcher",
+          "selected": "researcher",
+          "reason": "No hay evidencia ni análisis previos; se requiere investigar primero cómo se calculan p95 y costo sin inventar tokens."
+        },
+        {
+          "step": 2,
+          "proposed": "analyst",
+          "selected": "analyst",
+          "reason": "La investigación ya está disponible y no hay análisis; corresponde que el analista procese la evidencia para calcular p95 y costo sin inventar tokens."
+        },
+        {
+          "step": 3,
+          "proposed": "validate",
+          "selected": "validate",
+          "reason": "Ya existen evidencia y análisis; corresponde validar los artefactos antes de cualquier refinamiento."
+        }
+      ],
+      "contributions": [
+        {
+          "agent": "researcher",
+          "artifact": {
+            "summary": "Los tokens LLM no se estiman contando caracteres: provienen de prompt_tokens, completion_tokens y prompt_cache_hit_tokens del campo usage informado por DeepSeek. El costo se calcula separando entrada cacheada, entrada no cacheada y salida, multiplicando cada una por su tarifa por millón. La tarifa Flash OFF-PEAK verificada el 26/09/2026 es 0,003 USD de entrada cacheada, 0,15 USD de entrada no cacheada y 0,60 USD de salida por millón; es una estimación, no una factura, y debe actualizarse si cambia el horario o el proveedor. Los embeddings ONNX son locales y no facturan API, por lo que no se inventan tokens para ellos. p95 se calcula tomando el percentil 95 de las cinco duraciones de los trabajos del benchmark (cinco peticiones concurrentes), midiendo cada latencia desde el encolado hasta la finalización, incluyendo espera de cola, usando interpolación lineal. Cinco muestras son una prueba funcional, no una estimación estadística estable de producción.",
+            "source_ids": [
+              "629b4739bc460a9d4d330ba5"
+            ],
+            "sufficient": true
+          },
+          "tool": "search_knowledge_base"
+        },
+        {
+          "agent": "analyst",
+          "artifact": {
+            "answer": "Los tokens LLM no se estiman contando caracteres: provienen de prompt_tokens, completion_tokens y prompt_cache_hit_tokens del campo usage informado por DeepSeek. El costo se calcula separando entrada cacheada, entrada no cacheada y salida, multiplicando cada una por su tarifa por millón. La tarifa Flash OFF-PEAK verificada el 26/09/2026 es 0,003 USD de entrada cacheada, 0,15 USD de entrada no cacheada y 0,60 USD de salida por millón; es una estimación, no una factura, y debe actualizarse si cambia el horario o el proveedor. Los embeddings ONNX son locales y no facturan API, por lo que no se inventan tokens para ellos. p95 se calcula tomando el percentil 95 de las cinco duraciones de los trabajos del benchmark (cinco peticiones concurrentes), midiendo cada latencia desde el encolado hasta la finalización, incluyendo espera de cola, usando interpolación lineal.",
+            "source_ids": [
+              "629b4739bc460a9d4d330ba5"
+            ],
+            "answerable": true,
+            "confidence": 0.9,
+            "limitations": "Cinco muestras son una prueba funcional, no una estimación estadística estable de producción. Las tarifas son una estimación, no una factura, y deben actualizarse si cambia el horario o el proveedor."
+          },
+          "tool": "validate_research_schema"
+        }
+      ],
+      "usages": [
+        {
+          "kind": "chat",
+          "model": "deepseek-flash",
+          "provider": "deepseek",
+          "tokens_measured": true,
+          "attempts": 1,
+          "billing": "estimacion_usage_y_tarifas_OFF_PEAK_2026-09-26; no_factura",
+          "input_tokens": 224,
+          "output_tokens": 41,
+          "cached_tokens": 0,
+          "cost_usd": 5.8200000000000005e-05
+        },
+        {
+          "kind": "embedding",
+          "model": "all-MiniLM-L6-v2",
+          "provider": "onnx_local",
+          "tokens_measured": false,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "cached_tokens": 0,
+          "billing": "sin_facturacion_API; no_se_inventan_tokens_de_embeddings",
+          "cost_usd": 0.0
+        },
+        {
+          "kind": "chat",
+          "model": "deepseek-flash",
+          "provider": "deepseek",
+          "tokens_measured": true,
+          "attempts": 1,
+          "billing": "estimacion_usage_y_tarifas_OFF_PEAK_2026-09-26; no_factura",
+          "input_tokens": 1733,
+          "output_tokens": 283,
+          "cached_tokens": 1536,
+          "cost_usd": 0.00020395799999999996
+        },
+        {
+          "kind": "chat",
+          "model": "deepseek-flash",
+          "provider": "deepseek",
+          "tokens_measured": true,
+          "attempts": 1,
+          "billing": "estimacion_usage_y_tarifas_OFF_PEAK_2026-09-26; no_factura",
+          "input_tokens": 224,
+          "output_tokens": 45,
+          "cached_tokens": 0,
+          "cost_usd": 6.06e-05
+        },
+        {
+          "kind": "chat",
+          "model": "deepseek-flash",
+          "provider": "deepseek",
+          "tokens_measured": true,
+          "attempts": 1,
+          "billing": "estimacion_usage_y_tarifas_OFF_PEAK_2026-09-26; no_factura",
+          "input_tokens": 2129,
+          "output_tokens": 327,
+          "cached_tokens": 128,
+          "cost_usd": 0.000496734
+        },
+        {
+          "kind": "chat",
+          "model": "deepseek-flash",
+          "provider": "deepseek",
+          "tokens_measured": true,
+          "attempts": 1,
+          "billing": "estimacion_usage_y_tarifas_OFF_PEAK_2026-09-26; no_factura",
+          "input_tokens": 224,
+          "output_tokens": 33,
+          "cached_tokens": 0,
+          "cost_usd": 5.3400000000000004e-05
+        }
+      ],
+      "cost_usd": 0.0008728919999999999,
+      "finished_at": 1790469388.1908102,
+      "latency_seconds": 7.226198196411133
+    },
+    {
+      "job_id": "2fd3da64-b62e-4b3c-bf33-cb063cafec4d",
+      "status": "COMPLETED",
+      "created_at": 1790469380.9647858,
+      "request": {
+        "query": "Cual fue la facturacion anual de la empresa en 2025?",
+        "critical_action": false
+      },
+      "error": null,
+      "result": {
+        "answer": "No hay información suficiente para responder. Los documentos describen un sistema de demostración ficticio de uso educativo y no contienen datos de facturación anual de ninguna empresa en 2025. El único dato financiero mencionado son tarifas estimadas de un proveedor de LLM (DeepSeek) usadas para calcular costos, no facturación empresarial, y corresponden a una verificación de 2026.",
+        "references": [],
+        "answerable": false,
+        "confidence": 0.2,
+        "limitations": "La evidencia disponible no aborda facturación empresarial; solo menciona tarifas estimadas de un proveedor de LLM para cálculo de costos, no una factura ni facturación anual, y con fecha de verificación en 2026. No se puede responder a la pregunta con los documentos proporcionados.",
+        "contributors": [
+          "analyst",
+          "researcher"
+        ],
+        "validation_passed": true
+      },
+      "started_at": 1790469380.9665,
+      "trace_id": "6e7399fd99f663cb0a4b727762bd3559",
+      "routing_log": [
+        {
+          "step": 1,
+          "proposed": "researcher",
+          "selected": "researcher",
+          "reason": "No hay evidencia recolectada; se requiere investigación inicial para obtener la facturación anual de 2025."
+        },
+        {
+          "step": 2,
+          "proposed": "analyst",
+          "selected": "analyst",
+          "reason": "La evidencia de investigación ya está disponible y no hay análisis; corresponde pasar al analista para procesar los datos de facturación anual de 2025."
+        },
+        {
+          "step": 3,
+          "proposed": "validate",
+          "selected": "validate",
+          "reason": "Investigación y análisis ya completados sin errores; corresponde validar los artefactos antes de emitir la decisión final."
+        }
+      ],
+      "contributions": [
+        {
+          "agent": "researcher",
+          "artifact": {
+            "summary": "Los documentos proporcionados describen un sistema de demostración ficticio de uso educativo y no contienen información sobre la facturación anual de ninguna empresa en 2025. El único dato financiero mencionado son tarifas estimadas de un proveedor de LLM (DeepSeek) usadas para calcular costos, no facturación empresarial, y además corresponden a una verificación de 2026. Por tanto, no hay evidencia para responder a la pregunta.",
+            "source_ids": [
+              "629b4739bc460a9d4d330ba5"
+            ],
+            "sufficient": false
+          },
+          "tool": "search_knowledge_base"
+        },
+        {
+          "agent": "analyst",
+          "artifact": {
+            "answer": "No hay información suficiente para responder. Los documentos describen un sistema de demostración ficticio de uso educativo y no contienen datos de facturación anual de ninguna empresa en 2025. El único dato financiero mencionado son tarifas estimadas de un proveedor de LLM (DeepSeek) usadas para calcular costos, no facturación empresarial, y corresponden a una verificación de 2026.",
+            "source_ids": [],
+            "answerable": false,
+            "confidence": 0.2,
+            "limitations": "La evidencia disponible no aborda facturación empresarial; solo menciona tarifas estimadas de un proveedor de LLM para cálculo de costos, no una factura ni facturación anual, y con fecha de verificación en 2026. No se puede responder a la pregunta con los documentos proporcionados."
+          },
+          "tool": "validate_research_schema"
+        }
+      ],
+      "usages": [
+        {
+          "kind": "chat",
+          "model": "deepseek-flash",
+          "provider": "deepseek",
+          "tokens_measured": true,
+          "attempts": 1,
+          "billing": "estimacion_usage_y_tarifas_OFF_PEAK_2026-09-26; no_factura",
+          "input_tokens": 228,
+          "output_tokens": 38,
+          "cached_tokens": 0,
+          "cost_usd": 5.7e-05
+        },
+        {
+          "kind": "embedding",
+          "model": "all-MiniLM-L6-v2",
+          "provider": "onnx_local",
+          "tokens_measured": false,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "cached_tokens": 0,
+          "billing": "sin_facturacion_API; no_se_inventan_tokens_de_embeddings",
+          "cost_usd": 0.0
+        },
+        {
+          "kind": "chat",
+          "model": "deepseek-flash",
+          "provider": "deepseek",
+          "tokens_measured": true,
+          "attempts": 1,
+          "billing": "estimacion_usage_y_tarifas_OFF_PEAK_2026-09-26; no_factura",
+          "input_tokens": 1741,
+          "output_tokens": 130,
+          "cached_tokens": 1536,
+          "cost_usd": 0.00011335800000000001
+        },
+        {
+          "kind": "chat",
+          "model": "deepseek-flash",
+          "provider": "deepseek",
+          "tokens_measured": true,
+          "attempts": 1,
+          "billing": "estimacion_usage_y_tarifas_OFF_PEAK_2026-09-26; no_factura",
+          "input_tokens": 228,
+          "output_tokens": 47,
+          "cached_tokens": 0,
+          "cost_usd": 6.239999999999999e-05
+        },
+        {
+          "kind": "chat",
+          "model": "deepseek-flash",
+          "provider": "deepseek",
+          "tokens_measured": true,
+          "attempts": 1,
+          "billing": "estimacion_usage_y_tarifas_OFF_PEAK_2026-09-26; no_factura",
+          "input_tokens": 1984,
+          "output_tokens": 187,
+          "cached_tokens": 128,
+          "cost_usd": 0.000390984
+        },
+        {
+          "kind": "chat",
+          "model": "deepseek-flash",
+          "provider": "deepseek",
+          "tokens_measured": true,
+          "attempts": 1,
+          "billing": "estimacion_usage_y_tarifas_OFF_PEAK_2026-09-26; no_factura",
+          "input_tokens": 228,
+          "output_tokens": 40,
+          "cached_tokens": 0,
+          "cost_usd": 5.82e-05
+        }
+      ],
+      "cost_usd": 0.0006819419999999999,
+      "finished_at": 1790469387.8445592,
+      "latency_seconds": 6.879773378372192
+    }
+  ],
+  "caveat": "Cinco muestras no definen un SLO. Tokens LLM medidos por DeepSeek; embeddings sin contador. Costo estimado con tarifas OFF-PEAK verificadas, no factura."
+}
