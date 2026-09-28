@@ -2,7 +2,7 @@
 
 `rag.py` fragmenta documentos Markdown en 500 tokens con 50 de solapamiento. Cada vector incluye texto, fuente, página y categoría en sus metadatos. `PineconeStore` comprueba o crea un índice serverless de dimensión igual a la del modelo ONNX local (384 para `all-MiniLM-L6-v2`), espera a que esté listo y sube fragmentos con IDs estables a un namespace. La búsqueda densa se combina con BM25 mediante fusión recíproca de rankings ponderada en `EnsembleRetriever`, una implementación propia que no requiere `langchain-community`.
 
-El wrapper que prohíbe descargas del modelo ONNX se comparte con [la preentrega 3](../p3_local_rag/rag.py); al ejecutar el módulo se debe conservar la estructura completa del repositorio.
+El wrapper de embeddings verifica que el modelo ONNX ya esté en caché y falla sin descargarlo si falta. Esta carpeta es independiente de las otras preentregas.
 
 `evaluate.py` ejecuta cinco preguntas con fuentes relevantes previamente etiquetadas y calcula Precision@5 y Recall@5. El corpus incluye diez documentos, por lo que recuperar cinco no garantiza encontrar la fuente correcta. Cada pregunta tiene una única fuente relevante; con cinco resultados, la Precision@5 máxima por caso es 0,20. No se debe inflar esa cifra ni confundirla con la exactitud de una respuesta generada.
 

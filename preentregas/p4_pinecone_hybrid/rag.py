@@ -7,10 +7,24 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Callable
 
+from chromadb.utils.embedding_functions.onnx_mini_lm_l6_v2 import ONNXMiniLM_L6_V2
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from rank_bm25 import BM25Okapi
 
-from preentregas.p3_local_rag.rag import CachedONNXEmbeddings
+
+class LocalModelUnavailable(RuntimeError):
+    """El modelo de embeddings no está en caché; no se descarga por sorpresa."""
+
+
+class CachedONNXEmbeddings(ONNXMiniLM_L6_V2):
+    def _download_model_if_not_exists(self):
+        folder = Path(self.DOWNLOAD_PATH) / self.EXTRACTED_FOLDER_NAME
+        required = (
+            "config.json", "model.onnx", "special_tokens_map.json",
+            "tokenizer_config.json", "tokenizer.json", "vocab.txt",
+        )
+        if not all((folder / filename).is_file() for filename in required):
+            raise LocalModelUnavailable("Falta el modelo ONNX local")
 
 
 def tokenize(text: str) -> list[str]:
