@@ -2,7 +2,7 @@
 
 Esta carpeta implementa una interfaz común para los clientes asíncronos oficiales de OpenAI y Anthropic. `AsyncLLMManager` elige el proveedor a partir de `ModelConfig`, sin ramificaciones en el código que lo usa. `ChatMessage`, `ModelConfig` y `ModelResponse` son contratos Pydantic; la temperatura está restringida a 0–2 y `max_tokens` a 1–8192.
 
-El método `generate` espera la respuesta completa. `stream_tokens` entrega cada fragmento mediante un generador asíncrono. Las respuestas vacías, los límites de tasa, los timeouts y los fallos de conexión se convierten en códigos controlados. No se imprime el texto remoto del error porque podría contener información sensible. Los errores de programación desconocidos no se silencian.
+El método `generate` espera la respuesta completa. `stream_tokens` entrega cada fragmento mediante un generador asíncrono. Las respuestas vacías, los problemas de autenticación, los límites de tasa, los timeouts y los fallos de conexión se convierten en códigos controlados. No se imprime el texto remoto del error porque podría contener información sensible. Los errores de programación desconocidos no se silencian.
 
 ## Ejecución
 

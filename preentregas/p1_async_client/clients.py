@@ -20,11 +20,15 @@ def classify_provider_error(exc: Exception) -> str | None:
     name = type(exc).__name__
     if name in {"RateLimitError", "TooManyRequestsError"}:
         return "rate_limit"
+    if name in {"AuthenticationError", "PermissionDeniedError"}:
+        return "authentication"
     if name in {"APITimeoutError", "TimeoutError"}:
         return "timeout"
     if name in {"APIConnectionError", "APIError", "ServiceUnavailableError"}:
         return "network"
     status = getattr(exc, "status_code", None)
+    if status in {401, 403}:
+        return "authentication"
     if status == 429:
         return "rate_limit"
     if isinstance(status, int) and status >= 500:

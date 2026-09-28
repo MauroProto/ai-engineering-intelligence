@@ -153,3 +153,13 @@ class TestClients(unittest.IsolatedAsyncioTestCase):
         result = await manager.generate([ChatMessage(role="user", content="Saludá")])
         self.assertEqual(result.error_code, "provider_unavailable")
         self.assertNotIn("internal service text", result.model_dump_json())
+
+    async def test_invalid_credentials_are_controlled(self):
+        class AuthenticationError(Exception):
+            status_code = 401
+
+        sdk = FakeAnthropic(error=AuthenticationError("do not expose credentials"))
+        manager = AsyncLLMManager(ModelConfig(provider=Provider.ANTHROPIC, model="test"), sdk)
+        result = await manager.generate([ChatMessage(role="user", content="Saludá")])
+        self.assertEqual(result.error_code, "authentication")
+        self.assertNotIn("do not expose", result.model_dump_json())
