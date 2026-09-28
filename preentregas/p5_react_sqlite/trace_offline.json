@@ -1,0 +1,28 @@
+{
+  "tipo_de_prueba": "Simulación local con FakeOrderModel; no es una ejecución de un LLM remoto",
+  "thread_id": "thread-102",
+  "pasos": [
+    {
+      "tipo": "llamada_herramienta",
+      "nombres": ["find_orders"]
+    },
+    {
+      "tipo": "resultado_herramienta",
+      "nombre": "find_orders",
+      "contenido": "{\"customer_id\": 102, \"order_ids\": [\"A-1\", \"A-2\", \"A-3\"]}"
+    },
+    {
+      "tipo": "llamada_herramienta",
+      "nombres": ["sum_order_amounts"]
+    },
+    {
+      "tipo": "resultado_herramienta",
+      "nombre": "sum_order_amounts",
+      "contenido": "{\"orders\": 3, \"total\": 14500}"
+    },
+    {
+      "tipo": "respuesta_final",
+      "contenido": "El cliente 102 hizo 3 pedidos por 14500."
+    }
+  ]
+}

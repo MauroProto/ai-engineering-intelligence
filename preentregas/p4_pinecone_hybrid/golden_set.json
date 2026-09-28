@@ -1,0 +1,7 @@
+[
+  {"question": "¿Qué significa la latencia p95 de un worker asíncrono?", "relevant_sources": ["concurrencia.md"]},
+  {"question": "¿Qué sucede cuando vence una entrada de caché Redis?", "relevant_sources": ["cache.md"]},
+  {"question": "¿Cómo recupera LangGraph una conversación por thread_id?", "relevant_sources": ["persistencia.md"]},
+  {"question": "¿Qué registran los spans de Arize Phoenix?", "relevant_sources": ["observabilidad.md"]},
+  {"question": "¿Dónde se guardan las credenciales y cuándo hay que autorizar efectos externos?", "relevant_sources": ["seguridad.md"]}
+]

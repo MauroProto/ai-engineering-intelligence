@@ -1,0 +1,44 @@
+{
+  "tipo_de_prueba": "Embeddings ONNX reales, índice Pinecone simulado en memoria; no es una ejecución en Pinecone cloud",
+  "corpus_size": 10,
+  "retrieval_top_k": 5,
+  "cases": [
+    {
+      "question": "¿Qué significa la latencia p95 de un worker asíncrono?",
+      "relevant_sources": ["concurrencia.md"],
+      "retrieved_sources": ["concurrencia.md", "storage.md", "frontend.md", "cicd.md", "seguridad.md"],
+      "precision_at_5": 0.2,
+      "recall_at_5": 1.0
+    },
+    {
+      "question": "¿Qué sucede cuando vence una entrada de caché Redis?",
+      "relevant_sources": ["cache.md"],
+      "retrieved_sources": ["cache.md", "cicd.md", "frontend.md", "storage.md", "seguridad.md"],
+      "precision_at_5": 0.2,
+      "recall_at_5": 1.0
+    },
+    {
+      "question": "¿Cómo recupera LangGraph una conversación por thread_id?",
+      "relevant_sources": ["persistencia.md"],
+      "retrieved_sources": ["persistencia.md", "cache.md", "frontend.md", "cicd.md", "storage.md"],
+      "precision_at_5": 0.2,
+      "recall_at_5": 1.0
+    },
+    {
+      "question": "¿Qué registran los spans de Arize Phoenix?",
+      "relevant_sources": ["observabilidad.md"],
+      "retrieved_sources": ["observabilidad.md", "storage.md", "cicd.md", "frontend.md", "concurrencia.md"],
+      "precision_at_5": 0.2,
+      "recall_at_5": 1.0
+    },
+    {
+      "question": "¿Dónde se guardan las credenciales y cuándo hay que autorizar efectos externos?",
+      "relevant_sources": ["seguridad.md"],
+      "retrieved_sources": ["seguridad.md", "frontend.md", "storage.md", "cicd.md", "concurrencia.md"],
+      "precision_at_5": 0.2,
+      "recall_at_5": 1.0
+    }
+  ],
+  "mean_precision_at_5": 0.2,
+  "mean_recall_at_5": 1.0
+}
