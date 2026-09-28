@@ -1,0 +1,6 @@
+pinecone
+chromadb>=1,<2
+langchain-text-splitters>=1,<2
+rank-bm25>=0.2,<1
+tiktoken>=0.9,<1
+python-dotenv>=1,<2
