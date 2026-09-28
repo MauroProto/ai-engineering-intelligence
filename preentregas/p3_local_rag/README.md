@@ -2,7 +2,7 @@
 
 El script lee los archivos `.md` y `.txt` de `data/`, los divide con `RecursiveCharacterTextSplitter` en fragmentos de hasta 500 tokens y 50 de solapamiento, y los conserva en ChromaDB con identificadores estables y nombre de fuente. Indexación y consulta usan el mismo modelo ONNX `all-MiniLM-L6-v2`, ya disponible localmente. Si el modelo falta, el programa falla de forma explícita: no descarga nada.
 
-`LocalRAG.retrieve()` hace una búsqueda vectorial de hasta cuatro fragmentos. `get_rag_response()` usa `ChatPromptTemplate | model.with_structured_output(RAGAnswer)` y `.ainvoke()`; el prompt obliga a responder solo con ese contexto o a decir “No lo sé”. Un validador rechaza fuentes que no fueron recuperadas y respuestas sin fuente ni abstención. Ese control no demuestra por sí solo que toda frase sea verdadera.
+`LocalRAG.retrieve()` hace una búsqueda vectorial de hasta cuatro fragmentos. `get_rag_response()` encadena con LCEL la recuperación asíncrona, el formateo de fragmentos, `ChatPromptTemplate` y `model.with_structured_output(RAGAnswer)`, y ejecuta todo con `.ainvoke()`. El prompt obliga a responder solo con ese contexto o a decir “No lo sé”. Un validador rechaza fuentes que no fueron recuperadas y respuestas sin fuente ni abstención. Ese control no demuestra por sí solo que toda frase sea verdadera.
 
 ## Ejecutar sin credenciales
 

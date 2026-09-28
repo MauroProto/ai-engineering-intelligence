@@ -56,10 +56,11 @@ def validate_structured_result(result: Any) -> TechnicalExtraction:
 def build_chain(model: Any):
     """Inyectar un modelo permite probar LCEL sin red ni credenciales."""
     structured = model.with_structured_output(TechnicalExtraction, include_raw=True)
+    chain = PROMPT | structured | RunnableLambda(validate_structured_result)
 
-    async def invoke_structured(prompt: Any) -> Any:
+    async def invoke_safely(values: dict[str, str]) -> TechnicalExtraction:
         try:
-            return await structured.ainvoke(prompt)
+            return await chain.ainvoke(values)
         except Exception as exc:
             name = type(exc).__name__
             status = getattr(exc, "status_code", None)
@@ -72,8 +73,7 @@ def build_chain(model: Any):
                 raise TransientProviderError("Fallo transitorio del proveedor") from None
             raise
 
-    chain = PROMPT | RunnableLambda(invoke_structured) | RunnableLambda(validate_structured_result)
-    return chain.with_retry(
+    return RunnableLambda(invoke_safely).with_retry(
         retry_if_exception_type=(
             IncompleteOutputError, TransientProviderError, TimeoutError, ConnectionError,
         ),

@@ -95,3 +95,11 @@ class TestPipeline(unittest.IsolatedAsyncioTestCase):
         with self.assertRaises(AttributeError):
             await process_text("FastAPI usa Redis", model)
         self.assertEqual(model.calls, 1)
+
+    async def test_incomplete_fields_are_retried(self):
+        incomplete = valid_result()
+        incomplete["parsed"]["tecnologias"] = []
+        model = FakeModel([incomplete, valid_result()])
+        result = await process_text("FastAPI usa Redis; caída total", model)
+        self.assertIn("FastAPI", result.tecnologias)
+        self.assertEqual(model.calls, 2)

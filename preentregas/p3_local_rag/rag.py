@@ -9,6 +9,7 @@ import chromadb
 from chromadb.config import Settings as ChromaSettings
 from chromadb.utils.embedding_functions.onnx_mini_lm_l6_v2 import ONNXMiniLM_L6_V2
 from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.runnables import RunnableLambda, RunnablePassthrough
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 from .schemas import RAGAnswer, SourceChunk
@@ -153,16 +154,26 @@ class LocalRAG:
 
     async def get_rag_response(self, question: str, model: Any) -> RAGAnswer:
         """Recupera localmente y ejecuta una cadena LCEL asíncrona."""
-        chunks = await self.retrieve(question)
-        context = "\n\n".join(
-            f"[FUENTE {chunk.source} / {chunk.id}] {chunk.text}"
-            for chunk in chunks
+        async def prepare(payload: dict[str, str]) -> dict[str, Any]:
+            chunks = await self.retrieve(payload["question"])
+            return {
+                "question": payload["question"],
+                "context": "\n\n".join(
+                    f"[FUENTE {chunk.source} / {chunk.id}] {chunk.text}"
+                    for chunk in chunks
+                ),
+                "allowed_sources": {chunk.source for chunk in chunks},
+            }
+
+        chain = (
+            RunnableLambda(prepare)
+            | RunnablePassthrough.assign(
+                answer=PROMPT | model.with_structured_output(RAGAnswer)
+            )
         )
-        chain = PROMPT | model.with_structured_output(RAGAnswer)
-        answer = RAGAnswer.model_validate(
-            await chain.ainvoke({"question": question, "context": context})
-        )
-        allowed = {chunk.source for chunk in chunks}
+        result = await chain.ainvoke({"question": question})
+        answer = RAGAnswer.model_validate(result["answer"])
+        allowed = result["allowed_sources"]
         if not set(answer.sources).issubset(allowed):
             raise ValueError("La respuesta cita una fuente que no fue recuperada")
         if not answer.sources and not answer.answer.lower().startswith("no lo sé"):
